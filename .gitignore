@@ -1,0 +1,6 @@
+*~
+/app
+/build
+/repo
+/export
+/.flatpak-builder
