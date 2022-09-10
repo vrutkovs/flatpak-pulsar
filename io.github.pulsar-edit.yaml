@@ -70,8 +70,8 @@ modules:
       - mkdir /app/tools
     sources:
       - type: file
-        url: https://dev.azure.com/atomcommunity/2179356e-4464-463a-8aea-5ddc7d857fda/_apis/build/builds/1387/artifacts?artifactName=atom-amd64.deb&api-version=7.0&%24format=zip
-        sha256: 9cafbb7ae1db2f57f6c98815b58805ad14027debf743424bd8f8afe07c59f224
+        url: https://dev.azure.com/atomcommunity/2179356e-4464-463a-8aea-5ddc7d857fda/_apis/build/builds/1393/artifacts?artifactName=atom-amd64.deb&api-version=7.0&%24format=zip
+        sha256: 517fb9189655083fc151836cca307336e725d10ecc1043fd68af63a967d1dfa3
         dest-filename: pulsar-edit.deb.zip
       - type: file
         path: io.github.pulsar-edit.appdata.xml
