@@ -3,8 +3,8 @@ branch: master
 runtime: org.freedesktop.Sdk
 runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
-command: atom-dev
-rename-desktop-file: atom-dev.desktop
+command: pulsar
+rename-desktop-file: pulsar.desktop
 rename-icon: pulsar
 separate-locales: false
 finish-args:
@@ -55,30 +55,31 @@ modules:
       build-args:
         - --share=network
     build-commands:
-      - unzip pulsar-edit.deb.zip
-      - ar x atom-amd64.deb/atom-amd64.deb
+      - ar x pulsar-edit.deb
       - tar -xf data.tar.xz
       - cp -rf usr/* /app
+      - cp -rf opt/Pulsar/* /app/bin
       - mkdir -p /app/share/icons/hicolor/scalable/apps
       - cp pulsar.svg /app/share/icons/hicolor/scalable/apps
-      - desktop-file-edit --set-icon=io.github.pulsar-edit /app/share/applications/atom-dev.desktop
-      - desktop-file-edit --set-key=Exec --set-value='atom-dev %F' /app/share/applications/atom-dev.desktop
+      - rm -rf /app/share/icons/hicolor/0x0
+      - desktop-file-edit --set-icon=io.github.pulsar-edit /app/share/applications/pulsar.desktop
+      - desktop-file-edit --set-key=Exec --set-value='pulsar --no-sandbox %U' /app/share/applications/pulsar.desktop
       - install -Dm644 io.github.pulsar-edit.appdata.xml /app/share/appdata/io.github.pulsar-edit.appdata.xml
-      - install pip3 /app/bin
       - rm -rf /app/share/pulsar/chrome-sandbox
-      - sed -i 's;nohup "$ATOM_PATH";nohup "$ATOM_PATH" --no-sandbox;' /app/bin/atom-dev
+      - mv /app/bin/pulsar /app/bin/pulsar-real
+      - cp pulsar /app/bin/pulsar
+      - chmod a+x /app/bin/pulsar
       - mkdir /app/tools
     sources:
       - type: file
-        url: https://dev.azure.com/atomcommunity/2179356e-4464-463a-8aea-5ddc7d857fda/_apis/build/builds/1400/artifacts?artifactName=atom-amd64.deb&api-version=7.0&%24format=zip
-        sha256: 78c7f29a36f857d10c3c66a06bff83293d8f6c8e86c64b1d6d5e88bbf2e62e6a
-        dest-filename: pulsar-edit.deb.zip
+        url: https://api.cirrus-ci.com/v1/artifact/task/5140499722928128/binary/binaries/pulsar_1.63.2022100614_amd64.deb
+        sha256: 29dfb0445365e26bc6766733155f24c9591a7d147257d0f9bf27666b393fe72b
+        dest-filename: pulsar-edit.deb
       - type: file
         path: io.github.pulsar-edit.appdata.xml
       - type: file
         path: pulsar.svg
       - type: script
-        dest-filename: pip3
+        dest-filename: pulsar
         commands:
-          - export PYTHONUSERBASE="$XDG_DATA_HOME/python"
-          - exec /usr/bin/pip3 "$@"
+          - nohup /app/bin/pulsar-real --no-sandbox $@ &
