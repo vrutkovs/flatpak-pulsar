@@ -82,4 +82,4 @@ modules:
       - type: script
         dest-filename: pulsar
         commands:
-          - nohup /app/bin/pulsar-real --no-sandbox $@ &
+          - nohup /app/bin/pulsar-real --no-sandbox $@ >&/dev/null
