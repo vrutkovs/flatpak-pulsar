@@ -67,8 +67,9 @@ modules:
       - install -Dm644 io.github.pulsar-edit.appdata.xml /app/share/appdata/io.github.pulsar-edit.appdata.xml
       - rm -rf /app/share/pulsar/chrome-sandbox
       - mv /app/bin/pulsar /app/bin/pulsar-real
-      - cp pulsar /app/bin/pulsar
-      - chmod a+x /app/bin/pulsar
+      - mv /app/bin/resources/pulsar.sh /app/bin/pulsar
+      - sed -i 's;$TMPDIR/pulsar-build/Pulsar/pulsar;/app/bin/pulsar-real;g' /app/bin/pulsar
+      - sed -i 's;--pid=\$\$;--pid=\$\$ --no-sandbox;g' /app/bin/pulsar
       - mkdir /app/tools
     sources:
       - type: file
@@ -79,7 +80,3 @@ modules:
         path: io.github.pulsar-edit.appdata.xml
       - type: file
         path: pulsar.svg
-      - type: script
-        dest-filename: pulsar
-        commands:
-          - nohup /app/bin/pulsar-real --no-sandbox $@ >&/dev/null
