@@ -73,8 +73,8 @@ modules:
       - mkdir /app/tools
     sources:
       - type: file
-        url: https://api.cirrus-ci.com/v1/artifact/task/5140499722928128/binary/binaries/pulsar_1.63.2022100614_amd64.deb
-        sha256: 29dfb0445365e26bc6766733155f24c9591a7d147257d0f9bf27666b393fe72b
+        url: https://api.cirrus-ci.com/v1/artifact/task/5766711256285184/binary/binaries/pulsar_1.63.2022102722_amd64.deb
+        sha256: e3bb47b097f36bbfc53e663824993c57f08489f0bf6b96689872e893a0fbdc4f
         dest-filename: pulsar-edit.deb
       - type: file
         path: io.github.pulsar-edit.appdata.xml
